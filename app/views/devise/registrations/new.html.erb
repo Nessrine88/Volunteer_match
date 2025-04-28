@@ -1,4 +1,4 @@
-<h2>Sign up</h2>
+<h2 class="text-red-900 bg-black">Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -21,7 +21,13 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
-  <div class="actions">
+  <div class="field">
+  <%= f.label :role, "Select an Option" %>
+  <%= f.select :role, options_for_select(User::ROLES) %>
+</div>
+
+
+  <div class="actions bg-blue-100">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
