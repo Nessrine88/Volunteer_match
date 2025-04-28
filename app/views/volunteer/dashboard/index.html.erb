@@ -4,8 +4,7 @@
       Hello, <span class="font-semibold"><%= current_user.email %></span>!
     </p>
 
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all border border-black" %>
-
+   
     <p class="text-gray-600 text-sm md:text-base">
       Role: <span class="font-medium"><%= current_user.role %></span>
     </p>
