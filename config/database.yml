@@ -22,7 +22,7 @@ default: &default
 
 development:
   <<: *default
-  database: volunteer_app_development
+  database: voluntee_development
   username: postgres
   password: postgres
 
@@ -30,7 +30,7 @@ development:
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: volunteer_app
+  #username: voluntee_app
 
   # The password associated with the PostgreSQL role (username).
   #password:
@@ -58,7 +58,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: volunteer_app_test
+  database: voluntee_app_test
   username: postgres
   password: postgres
 
@@ -85,18 +85,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: volunteer_app_production
-    username: volunteer_app
-    password: <%= ENV["VOLUNTEER_APP_DATABASE_PASSWORD"] %>
+    database: voluntee_app_production
+    username: voluntee_app
+    password: <%= ENV["VOLUNTEE_APP_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: volunteer_app_production_cache
+    database: voluntee_app_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: volunteer_app_production_queue
+    database: voluntee_app_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: volunteer_app_production_cable
+    database: voluntee_app_production_cable
     migrations_paths: db/cable_migrate

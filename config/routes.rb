@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 # root "posts#index"# config/routes.rb
 # config/routes.rb
 root "pages#home"
+resources :opportunities
+resources :applications
 end
