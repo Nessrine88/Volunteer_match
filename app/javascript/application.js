@@ -1,5 +1,7 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
-// app/javascript/application.js
-import "tailwindcss/tailwind.css"
+import 'flowbite';
+import "flowbite/dist/flowbite.turbo.js";
+import 'flowbite-datepicker';
+import 'flowbite/dist/datepicker.turbo.js';

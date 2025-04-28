@@ -1,0 +1,57 @@
+<nav class="bg-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      
+      <!-- Left side: Logo and Navigation Links -->
+      <div class="flex">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center">
+          <%= link_to root_path, class: "text-xl font-bold text-gray-800" do %>
+            VolunteerMatch
+          <% end %>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+          <%= link_to opportunities_path, class: "inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" do %>
+            Opportunities
+          <% end %>
+
+          <% if user_signed_in? && current_user.role === "organization" %>
+            <%= link_to my_opportunities_path, class: "inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" do %>
+              My Opportunities
+            <% end %>
+          <% end %>
+
+          <% if user_signed_in? && current_user.role === "volunteer" %>
+            <%= link_to applications_path, class: "inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700" do %>
+              My Applications
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Right side: Authentication Buttons -->
+      <div class="flex items-center">
+        <% if user_signed_in? %>
+          <span class="mr-4 text-gray-600">
+            Hello, <%= current_user.email %>!
+          </span>
+
+          <%= link_to destroy_user_session_path, method: :delete, class: "text-gray-500 hover:text-gray-700 text-sm" do %>
+            Logout
+          <% end %>
+        <% else %>
+          <%= link_to new_user_session_path, class: "text-gray-500 hover:text-gray-700 text-sm mr-4" do %>
+            Login
+          <% end %>
+
+          <%= link_to new_user_registration_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" do %>
+            Sign Up
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</nav>

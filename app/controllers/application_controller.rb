@@ -10,4 +10,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :role, :first_name, :last_name, :phone ])
     devise_parameter_sanitizer.permit(:account_update, keys: [ :first_name, :last_name, :phone ])
   end
+
+  def after_sign_in_path_for(role)
+    if current_user.role == "organization"
+      organization_dashboard_path
+    else
+      volunteer_dashboard_path
+    end
+  end
 end

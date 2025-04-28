@@ -8,6 +8,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- ✅ ADD TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Flowbite scripts (must come AFTER tailwind) -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.turbo.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -23,9 +30,10 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-    <p class="notice"><%= notice %> </p>
-    <p class="alert"><%= alert %> </p>
+    <main class=" ">
+      <%= render 'shared/navbar' %>
+      <p class="notice"><%= notice %> </p>
+      <p class="alert"><%= alert %> </p>
       <%= yield %>
     </main>
   </body>

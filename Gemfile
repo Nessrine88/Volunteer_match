@@ -66,3 +66,5 @@ end
 
 gem "devise", "~> 4.9"
 gem "pundit"
+
+gem "tailwindcss-ruby", "~> 4.1"
