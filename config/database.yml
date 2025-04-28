@@ -22,13 +22,15 @@ default: &default
 
 development:
   <<: *default
-  database: volunteer_development
+  database: volunteer_app_development
+  username: postgres
+  password: postgres
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: volunteer
+  #username: volunteer_app
 
   # The password associated with the PostgreSQL role (username).
   #password:
@@ -56,7 +58,9 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: volunteer_test
+  database: volunteer_app_test
+  username: postgres
+  password: postgres
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,18 +85,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: volunteer_production
-    username: volunteer
-    password: <%= ENV["VOLUNTEER_DATABASE_PASSWORD"] %>
+    database: volunteer_app_production
+    username: volunteer_app
+    password: <%= ENV["VOLUNTEER_APP_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: volunteer_production_cache
+    database: volunteer_app_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: volunteer_production_queue
+    database: volunteer_app_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: volunteer_production_cable
+    database: volunteer_app_production_cable
     migrations_paths: db/cable_migrate
