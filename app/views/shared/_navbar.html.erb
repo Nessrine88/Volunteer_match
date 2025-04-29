@@ -1,12 +1,12 @@
 <nav class="bg-white shadow-amber-950 shadow">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      
+
       <!-- Left: Logo -->
       <div class="flex items-center space-x-2">
         <%= link_to root_path, class: "flex items-center space-x-2 group" do %>
-          <div class="w-12 h-12 rounded-full border-2 border-black border-solid overflow-hidden  group-hover:border-blue-500 transition-colors">
-            <img src="<%= image_path('logo.jpeg') %>" alt="Logo" class="w-full h-full object-covcontainer" />
+          <div class="w-12 h-12 rounded-full border-2 border-black overflow-hidden group-hover:border-blue-500 transition-colors">
+            <img src="<%= image_path('logo.jpeg') %>" alt="Logo" class="w-full h-full object-cover" />
           </div>
           <span class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
             Volunteer Match
@@ -14,44 +14,92 @@
         <% end %>
       </div>
 
-      <!-- Center: Nav Links -->
-      <div class="hidden md:flex items-center px-4 py-2 rounded-full sticky border border-black space-x-6 ">
+      <!-- Center: Nav Links (desktop only) -->
+      <div class="hidden md:flex items-center px-4 py-2 rounded-full border border-black space-x-6">
         <% if user_signed_in? && current_user.role === "volunteer" %>
-            <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
-              FIND OPPORTUNITY
-            <% end %>
-             <%= link_to my_applications_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
-                My applications
-              <% end %>
+          <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
+            FIND OPPORTUNITY
+          <% end %>
+          <%= link_to my_applications_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+            My applications
+          <% end %>
+        <% end %>
 
+        <% if user_signed_in? && current_user.role === "organization" %>
+          <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
+            ADD OPPORTUNITY
           <% end %>
-        <%# only show to signed-in organizations %>
-          <% if user_signed_in? && current_user.role === "organization" %>
-            <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
-              ADD OPPORTUNITY
-            <% end %>
+          <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+            My Opportunities
           <% end %>
+        <% end %>
 
-          <% if user_signed_in? && current_user.role === "organization" %>
-            <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
-              My Opportunities
-            <% end %>
-          <% end %>
-        <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT<% end %>
-        <!-- <span class="text-xl">🌞</span> -->
+        <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT <% end %>
+        <span class="text-xl">🌞</span>
       </div>
 
-      <!-- Right: Auth or Social Icons -->
-      <div class="flex items-center space-x-4">
+      <!-- Right: Auth links -->
+      <div class="hidden md:flex items-center space-x-4">
         <% if user_signed_in? %>
-          <span class="text-sm text-gray-600 hidden md:inline-block">Welcome, <%= current_user.email %>!</span>
+          <span class="text-sm text-gray-600">Welcome, <%= current_user.email %>!</span>
           <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
         <% else %>
           <%= link_to new_user_session_path, class: "text-sm text-gray-600 hover:text-gray-900" do %>Sign In<% end %>
           <%= link_to new_user_registration_path, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition" do %>Register<% end %>
         <% end %>
       </div>
-      
+
+      <!-- Mobile Hamburger Menu Button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="md:hidden hidden flex flex-col space-y-2 mt-4 px-4 py-2 border rounded-md bg-white shadow">
+      <% if user_signed_in? && current_user.role === "volunteer" %>
+        <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
+          FIND OPPORTUNITY
+        <% end %>
+        <%= link_to my_applications_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+          My applications
+        <% end %>
+      <% end %>
+
+      <% if user_signed_in? && current_user.role === "organization" %>
+        <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
+          ADD OPPORTUNITY
+        <% end %>
+        <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+          My Opportunities
+        <% end %>
+      <% end %>
+
+      <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT <% end %>
+
+      <% if user_signed_in? %>
+        <span class="text-sm text-gray-600">Welcome, <%= current_user.email %>!</span>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
+      <% else %>
+        <%= link_to new_user_session_path, class: "text-sm text-gray-600 hover:text-gray-900" do %>Sign In<% end %>
+        <%= link_to new_user_registration_path, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition" do %>Register<% end %>
+      <% end %>
     </div>
   </div>
 </nav>
+
+<!-- Toggle Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  });
+</script>
