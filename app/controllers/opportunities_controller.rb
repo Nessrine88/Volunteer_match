@@ -5,14 +5,18 @@ class OpportunitiesController < ApplicationController
   def index
     @opportunities = Opportunity.all
   end
+ 
   def index_for_organization
     if current_user
+      logger.debug "Current User ID: #{current_user.id}"
       @opportunities = current_user.opportunities.order(created_at: :desc)
-      logger.debug "Opportunities: #{@opportunities.inspect}"
+      logger.debug "Opportunities found: #{@opportunities.count}"
+      logger.debug "Opportunity IDs: #{@opportunities.pluck(:id)}"
     else
       redirect_to root_path, alert: "You are not authorized to view this page."
     end
   end
+
   # GET /opportunities/1 or /opportunities/1.json
   def show
     @applied_users = @opportunity.applications.includes(:user).map(&:user)
@@ -72,7 +76,7 @@ class OpportunitiesController < ApplicationController
 
   private
     def set_opportunity
-      @opportunity = Opportunity.find(params.expect(:id))
+      @opportunity = Opportunity.find(params[:id])
     end
 
     def applications
@@ -81,6 +85,6 @@ class OpportunitiesController < ApplicationController
     end
     
     def opportunity_params
-      params.expect(opportunity: [ :title, :description, :skills_required, :location, :start_date, :end_date ])
+      params.require(:opportunity).permit(:title, :description, :skills_required, :location, :start_date, :end_date)
     end
 end
