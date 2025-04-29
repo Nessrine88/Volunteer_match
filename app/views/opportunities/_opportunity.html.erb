@@ -1,70 +1,70 @@
+<%= link_to opportunity_path(opportunity), class: "block ", data: { turbo: false } do %>
+  <div id="<%= dom_id opportunity %>" class="group mt-5 max-w-2xl mx-auto bg-blue-600 rounded-2xl shadow-md overflow-hidden p-6 my-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300 cursor-pointer">
 
-<div id="<%= dom_id opportunity %>" class="mt-5 max-w-2xl mx-auto bg-red-600 rounded-2xl shadow-md overflow-hidden p-6 my-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-
-  <div class="space-y-4">
-  <div class="flex justify-between items-center">
- 
-    <div>
-
-      <h2 class="text-2xl font-bold text-white mb-2"><%= opportunity.title %></h2>
-      <div class="flex items-center text-sm text-white mb-4">
-      
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-        <span><%= opportunity.location %></span>
-      </div>
-    </div>
-    <div>
-  <% if user_signed_in? %>
-   <% if current_user.role === "volunteer" %>
-    <%= link_to "Apply", new_opportunity_application_path(opportunity), class: "px-4 py-2 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition" %>
-    <% end %>
-  <% else %>
-    <%= link_to "Sign in to Apply", new_user_session_path, class: "px-4 py-2 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition" %>
-  <% end %>
-
-</div>
-
-  </div>
-  
-
-    <div class="bg-gray-50 p-4 rounded-lg">
-      <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Description</h3>
-      <p class="text-gray-700"><%= opportunity.description %></p>
-    </div>
-
-    <div class="bg-blue-50 p-4 rounded-lg">
-      <h3 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Skills Required</h3>
-      <div class="flex flex-wrap gap-2">
-        <% opportunity.skills_required.split(',').each do |skill| %>
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            <%= skill.strip %>
-          </span>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-gray-50 p-4 rounded-lg">
-        <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Dates</h3>
-        <div class="flex items-center space-x-4">
-          <div>
-            <p class="text-xs text-gray-500">Start Date</p>
-            <p class="text-gray-700 font-medium"><%= opportunity.start_date.strftime('%b %d, %Y') if opportunity.start_date %></p>
+    <div class="space-y-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 class="text-2xl font-bold text-white mb-2"><%= opportunity.title %></h2>
+          <div class="flex items-center text-sm text-white mb-4">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span><%= opportunity.location %></span>
           </div>
-          <div>
-            <p class="text-xs text-gray-500">End Date</p>
-            <p class="text-gray-700 font-medium"><%= opportunity.end_date.strftime('%b %d, %Y') if opportunity.end_date %></p>
-          </div>
+        </div>
+
+        <div onclick="event.stopPropagation();">
+          <% if user_signed_in? %>
+            <% if current_user.role == "volunteer" %>
+              <%= form_with(model: [opportunity, Application.new], local: true) do |f| %>
+                <%= f.hidden_field :opportunity_id, value: opportunity.id %>
+                <%= f.submit "Apply", class: "px-4 py-2 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition" %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= link_to "Apply", new_user_session_path, class: "px-4 py-2 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition", data: { turbo: false } %>
+          <% end %>
         </div>
       </div>
 
       <div class="bg-gray-50 p-4 rounded-lg">
-        <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Posted By</h3>
-        <p class="text-gray-700"><%= opportunity.user.email %></p>
+        <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Description</h3>
+        <p class="text-gray-700"><%= opportunity.description %></p>
+      </div>
+
+      <div class="bg-blue-50 p-4 rounded-lg">
+        <h3 class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Skills Required</h3>
+        <div class="flex flex-wrap gap-2">
+          <% opportunity.skills_required.split(',').each do |skill| %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              <%= skill.strip %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Dates</h3>
+          <div class="flex items-center space-x-4">
+            <div>
+              <p class="text-xs text-gray-500">Start Date</p>
+              <p class="text-gray-700 font-medium"><%= opportunity.start_date.strftime('%b %d, %Y') if opportunity.start_date %></p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">End Date</p>
+              <p class="text-gray-700 font-medium"><%= opportunity.end_date.strftime('%b %d, %Y') if opportunity.end_date %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Posted By</h3>
+          <p class="text-gray-700"><%= opportunity.user.email %></p>
+        </div>
       </div>
     </div>
+
   </div>
-</div>
+<% end %>

@@ -1,4 +1,4 @@
-<nav class="bg-white shadow-md">
+<nav class="bg-white shadow-amber-950 shadow">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       
@@ -15,7 +15,7 @@
       </div>
 
       <!-- Center: Nav Links -->
-      <div class="hidden md:flex items-center px-4 py-2 rounded-full border border-black space-x-6">
+      <div class="hidden md:flex items-center px-4 py-2 rounded-full sticky border border-black space-x-6 ">
         <% if user_signed_in? && current_user.role === "volunteer" %>
             <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
               FIND OPPORTUNITY

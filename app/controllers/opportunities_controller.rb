@@ -1,6 +1,5 @@
 class OpportunitiesController < ApplicationController
   before_action :set_opportunity, only: %i[ show edit update destroy ]
-  before_action :authenticate_user! 
   before_action :require_volunteer, only: [:applicants]
 
   def index
@@ -70,7 +69,7 @@ class OpportunitiesController < ApplicationController
     @opportunity.destroy!
 
     respond_to do |format|
-      format.html { redirect_to opportunities_path, status: :see_other, notice: "Opportunity was successfully destroyed." }
+      format.html { redirect_to opportunities_path, status: :see_other}
       format.json { head :no_content }
     end
   end

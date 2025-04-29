@@ -8,6 +8,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Example: Roboto and Lato -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700&display=swap">
+
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.turbo.min.js"></script>
@@ -30,10 +34,22 @@
     <main class="relative">
       <%= render 'shared/navbar' %>
 
-      <div class="absolute z-50 m-10">
-        <p class="notice bg-green-500"><%= notice %></p>
-        <p class="alert bg-red-600 text-white"><%= alert %></p>
-      </div>
+     <div class="fixed top-20 right-4 z-50 space-y-4 w-full max-w-sm">
+  <% if notice %>
+    <div class="flex items-center justify-between p-4 bg-green-500 text-white rounded-lg shadow-lg animate-slide-down">
+      <p class="text-sm font-medium"><%= notice %></p>
+      <button onclick="this.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">&times;</button>
+    </div>
+  <% end %>
+
+  <% if alert %>
+    <div class="flex items-center justify-between p-4 bg-red-600 text-white rounded-lg shadow-lg animate-slide-down">
+      <p class="text-sm font-medium"><%= alert %></p>
+      <button onclick="this.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">&times;</button>
+    </div>
+  <% end %>
+</div>
+
 
       <%= yield %>
     </main>

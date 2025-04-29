@@ -1,42 +1,58 @@
-<div class="max-w-md mx-auto my-5 p-8 bg-white rounded-lg shadow-md">
+<div class="flex justify-center items-center  bg-white">
+  <div class="bg-white rounded-3xl shadow-lg flex overflow-hidden w-full px-4 mx-10  border-2 border-black my-10 h-[80dvh]">
+    <!-- Registration Form Section -->
+    <div class="w-full md:w-1/2 p-10">
+      <h2 class="text-2xl font-semibold text-center mb-8">SIGN UP</h2>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-5" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="field">
-      <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", 
-          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-900 focus:border-red-900" %>
-    </div>
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email",
+              class: "w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        </div>
 
-    <div class="field">
-      <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
-      <% if @minimum_password_length %>
-        <em class="text-xs text-gray-500">(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %>
-      <%= f.password_field :password, autocomplete: "new-password", 
-          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-900 focus:border-red-900" %>
-    </div>
+        <div>
+          <%= f.label :password, class: "block text-sm font-medium" %>
+          <% if @minimum_password_length %>
+            <em class="text-xs text-gray-500">(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password",
+              class: "w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        </div>
 
-    <div class="field">
-      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", 
-          class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-900 focus:border-red-900" %>
-    </div>
+        <div>
+          <%= f.label :password_confirmation, class: "block text-sm font-medium" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password",
+              class: "w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        </div>
 
-    <div class="field">
-      <%= f.label :role, "Select an Option", class: "block text-sm font-medium text-gray-700" %>
-      <%= f.select :role, options_for_select(User::ROLES), {}, 
-          class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-red-900 focus:border-red-900 rounded-md" %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "Sign up", 
-          class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-300 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-900 cursor-pointer" %>
-    </div>
+       <div>
+  <%= f.label :role, "Are you ?", class: "block text-sm font-medium mb-2 text-center" %>
+<div class="flex justify-center space-x-4">
+  <% User::ROLES.each do |role| %>
+    <%= f.radio_button :role, role, id: "role_#{role}", class: "hidden peer" %>
+    <%= label_tag "role_#{role}", role.humanize, class: "flex items-center bg-blue-600 p-5 justify-center min-w-md  rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white transition" %>
   <% end %>
+</div>
 
-  <div class="mt-6">
-    <%= render "devise/shared/links" %>
+</div>
+
+        <div>
+          <%= f.submit "SIGN UP",
+              class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-full font-semibold shadow-md transition" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+
+    <!-- Image Section -->
+    <div class="hidden md:flex md:w-1/2 items-center justify-center bg-gray-50">
+      <img src="<%= asset_path('Volunteers.jpg') %>" alt="Sign Up Visual" class="w-full h-auto object-cover" />
+    </div>
   </div>
-</div>s
+</div>
