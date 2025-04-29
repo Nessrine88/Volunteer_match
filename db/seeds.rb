@@ -1,64 +1,41 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 # db/seeds.rb
 
-# Create Users
-user1 = User.create!(
-  email: "user1@example.com",
-  password: "password123",
-  role: "volunteer",
-  confirmed_at: Time.now
-)
+# Create Users if they don't already exist
+user1 = User.find_or_create_by!(email: "user1@example.com") do |user|
+  user.password = "password123"
+  user.role = "volunteer"
+  user.confirmed_at = Time.now
+end
 
-user2 = User.create!(
-  email: "user2@example.com",
-  password: "password123",
-  role: "volunteer",
-  confirmed_at: Time.now
-)
+user2 = User.find_or_create_by!(email: "user2@example.com") do |user|
+  user.password = "password123"
+  user.role = "volunteer"
+  user.confirmed_at = Time.now
+end
 
-user3 = User.create!(
-  email: "admin@example.com",
-  password: "password123",
-  role: "admin",
-  confirmed_at: Time.now
-)
+user3 = User.find_or_create_by!(email: "organization@example.com") do |user|
+  user.password = "password123"
+  user.role = "organization"
+  user.confirmed_at = Time.now
+end
 
-# Create Opportunities for users
-Opportunity.create!(
-  title: "Software Developer",
-  description: "Looking for an experienced software developer",
-  skills_required: "Ruby, Rails, JavaScript",
-  location: "Remote",
-  start_date: "2025-01-01",
-  end_date: "2025-06-01",
-  user: user3
-)
+# Create Opportunities for users if they don't already exist
+Opportunity.find_or_create_by!(title: "Software Developer", user: user3) do |opportunity|
+  opportunity.description = "Looking for an experienced software developer"
+  opportunity.skills_required = "Ruby, Rails, JavaScript"
+  opportunity.location = "Remote"
+  opportunity.start_date = "2025-01-01"
+  opportunity.end_date = "2025-06-01"
+end
 
-Opportunity.create!(
-  title: "Project Manager",
-  description: "Looking for a project manager with experience in agile methodologies",
-  skills_required: "Agile, Scrum, Project Management",
-  location: "New York",
-  start_date: "2025-02-01",
-  end_date: "2025-08-01",
-  user: user2
-)
+Opportunity.find_or_create_by!(title: "Project Manager", user: user2) do |opportunity|
+  opportunity.description = "Looking for a project manager with experience in agile methodologies"
+  opportunity.skills_required = "Agile, Scrum, Project Management"
+  opportunity.location = "New York"
+  opportunity.start_date = "2025-02-01"
+  opportunity.end_date = "2025-08-01"
+end
 
-# Create Applications for users
-Application.create!(
-  user: user1,
-  status: "Pending"
-)
-
-Application.create!(
-  user: user2,
-  status: "Accepted"
-)
+# Create Applications for users if they don't already exist
+Application.find_or_create_by!(user: user1, status: "Pending")
+Application.find_or_create_by!(user: user2, status: "Accepted")

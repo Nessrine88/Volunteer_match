@@ -9,6 +9,11 @@ class OpportunitiesController < ApplicationController
   def show
   end
 
+  def search
+    @opportunities = Opportunity.where("title ILIKE ?", "%#{params[:query]}%")
+    render :index
+  end
+
   # GET /opportunities/new
   def new
     @opportunity = Opportunity.new

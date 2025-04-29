@@ -4,4 +4,5 @@ import "controllers"
 import 'flowbite';
 import "flowbite/dist/flowbite.turbo.js";
 import 'flowbite-datepicker';
-import 'flowbite/dist/datepicker.turbo.js';
+import 'flowbite/dist/datepicker.turbo.js';import "controllers"
+import "@hotwired/turbo-rails"

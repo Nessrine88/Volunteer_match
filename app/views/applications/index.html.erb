@@ -1,29 +1,39 @@
 <% content_for :title, "Applications" %>
 
-<div class="w-full">
+<div class="w-full px-4 sm:px-6 lg:px-8">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <div class="p-4 mb-6 rounded-lg bg-red-50 border-l-4 border-red-500">
+      <p class="text-red-700 font-medium" id="notice"><%= notice %></p>
+    </div>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Applications</h1>
-    <%= link_to "New application", new_application_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="font-bold text-3xl sm:text-4xl text-gray-900">Applications</h1>
   </div>
 
-  <div id="applications" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="applications" class="space-y-6 divide-y divide-gray-200">
     <% if @applications.any? %>
       <% @applications.each do |application| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render application %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", application, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_application_path(application), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Destroy", application, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+        <div class="pt-6 pb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+          <div class="md:col-span-2">
+            <%= render application %>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-3 justify-end">
+            <%= link_to "Show", application, class: "px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+            <%= link_to "Edit", edit_application_path(application), class: "px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+            <%= button_to "Destroy", application, method: :delete, class: "px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500", data: { turbo_confirm: "Are you sure?" } %>
           </div>
         </div>
       <% end %>
     <% else %>
-      <p class="text-center my-10">No applications found.</p>
+      <div class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <h3 class="mt-2 text-lg font-medium text-gray-900">No applications found</h3>
+        <p class="mt-1 text-gray-500">Get started by creating a new application.</p>
+      </div>
     <% end %>
   </div>
 </div>

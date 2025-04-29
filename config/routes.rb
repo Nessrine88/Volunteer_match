@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 root "home#index"
 resources :opportunities
 resources :applications
+get 'search', to: 'opportunities#search', as: 'search'
 
  authenticated :user do
     get "organization/dashboard", to: "organization/dashboard#index", as: :organization_dashboard
