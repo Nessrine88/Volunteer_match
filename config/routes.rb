@@ -5,36 +5,34 @@ Rails.application.routes.draw do
   # Devise routes for user authentication
   devise_for :users
 
-  # Health check route for load balancers and uptime monitoring
+  # Health check route
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Resources for opportunities
+  # Main resources for opportunities
   resources :opportunities do
     member do
-      get :applications  # Custom list of applications for a single opportunity
+      # Corrected: Moved applicants to OpportunitiesController (not ApplicationsController)
+      get 'applicants', to: 'opportunities#applicants'  # List of applicants for an opportunity
     end
 
-    # Nested resource for applications (for applying to an opportunity)
+    # Nested applications (for applying to an opportunity)
     resources :applications, only: [:new, :create]
   end
 
   # Search route
   get 'search', to: 'opportunities#search', as: 'search'
 
-  # Authenticated user routes (dashboard based on user role)
+  # Authenticated user routes (dashboards & role-based views)
   authenticated :user do
-    # Organization dashboard route - only accessible by organization users
+    # Organization dashboard
     get "organization/dashboard", to: "organization/dashboard#index", as: :organization_dashboard
-    # Volunteer dashboard route - only accessible by volunteer users
+    # Volunteer dashboard
     get "volunteer/dashboard", to: "volunteer/dashboard#index", as: :volunteer_dashboard
 
-    # Custom route for organizations to see only their opportunities
+    # Organization-specific opportunities
     get "organization/opportunities", to: "opportunities#index_for_organization", as: :organization_opportunities
 
-    # Custom route for volunteers to see all opportunities
+    # Volunteer view of all opportunities
     get "volunteer/opportunities", to: "opportunities#index_for_all", as: :volunteer_opportunities
   end
-
-  # Fallback or catch-all route for other cases
-  # root "posts#index"  # Uncomment and modify if needed for default root path
 end

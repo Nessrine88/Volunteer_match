@@ -1,5 +1,5 @@
 class Opportunity < ApplicationRecord
    has_many :applications
-  has_many :volunteers, through: :applications, source: :volunteer
+   has_many :users, through: :applications
   belongs_to :user
 end

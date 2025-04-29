@@ -13,6 +13,10 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  
+  
+  
+
   def create
     # Check if the volunteer has already applied for the opportunity
     existing_application = @opportunity.applications.find_by(user_id: current_user.id)

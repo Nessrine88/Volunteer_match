@@ -1,6 +1,7 @@
 class OpportunitiesController < ApplicationController
   before_action :set_opportunity, only: %i[ show edit update destroy ]
   before_action :authenticate_user! 
+  before_action :require_volunteer, only: [:applicants]
 
   def index
     @opportunities = Opportunity.all
@@ -73,11 +74,20 @@ class OpportunitiesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def applicants
+    @opportunity = current_user.opportunities.find(params[:id])
+    @applications = @opportunity.applications.includes(:user)
+  end
   private
-    def set_opportunity
-      @opportunity = Opportunity.find(params[:id])
+  def set_opportunity
+    @opportunity = Opportunity.find(params[:id])
+
+  end
+  def require_volunteer
+    unless current_user.role === "organization"
+      redirect_to root_path, alert: "You don't have permission to access this page"
     end
+  end
 
     def applications
       @opportunity = Opportunity.find(params[:id])

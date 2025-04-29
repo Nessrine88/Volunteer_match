@@ -1,0 +1,14 @@
+<h2 class="text-xl font-bold mb-4">Applicants for "<%= @opportunity.title %>"</h2>
+
+<% if @applications.present? && @applications.any? %>
+  <ul class="space-y-4">
+    <% @applications.each do |application| %>
+      <li class="p-4 border rounded shadow-sm bg-white">
+        <p class="text-gray-800 font-semibold"><%= application.user.email %> (<%= application.user.email %>)</p>
+        <p class="text-sm text-gray-600 mt-1">Status: <%= application.status.capitalize %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-gray-500">No applicants yet.</p>
+<% end %>
