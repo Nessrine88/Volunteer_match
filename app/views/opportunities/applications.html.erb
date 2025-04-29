@@ -1,0 +1,20 @@
+<h1>Volunteer Applications for <%= @opportunity.title %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @applications.each do |application| %>
+      <tr>
+        <td><%= application.volunteer.name %></td>
+        <td><%= application.volunteer.email %></td>
+        <td><%= application.status.capitalize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

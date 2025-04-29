@@ -16,8 +16,23 @@
 
       <!-- Center: Nav Links -->
       <div class="hidden md:flex items-center px-4 py-2 rounded-full border border-black space-x-6">
-        <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>FIND OPPORTUNITIES<% end %>
-        <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %>RECRUIT VOLUNTEERS<% end %>
+        <% if user_signed_in? && current_user.role === "volunteer" %>
+            <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
+              FIND OPPORTUNITY
+            <% end %>
+          <% end %>
+        <%# only show to signed-in organizations %>
+          <% if user_signed_in? && current_user.role === "organization" %>
+            <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
+              ADD OPPORTUNITY
+            <% end %>
+          <% end %>
+
+          <% if user_signed_in? && current_user.role === "organization" %>
+            <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
+              LIST OF VOLUINTEER
+            <% end %>
+          <% end %>
         <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT<% end %>
         <!-- <span class="text-xl">🌞</span> -->
       </div>

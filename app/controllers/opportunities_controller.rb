@@ -7,6 +7,7 @@ class OpportunitiesController < ApplicationController
 
   # GET /opportunities/1 or /opportunities/1.json
   def show
+    @applied_users = @opportunity.applications.includes(:user).map(&:user)
   end
 
   def search
@@ -62,12 +63,15 @@ class OpportunitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_opportunity
       @opportunity = Opportunity.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
+    def applications
+      @opportunity = Opportunity.find(params[:id])
+      @applications = @opportunity.applications.includes(:volunteer)
+    end
+    
     def opportunity_params
       params.expect(opportunity: [ :title, :description, :skills_required, :location, :start_date, :end_date, :user_id ])
     end

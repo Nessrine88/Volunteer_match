@@ -1,70 +1,64 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_opportunity
+  before_action :require_volunteer_role, only: [:new, :create]
 
-  # GET /applications or /applications.json
-  def index
-    @applications = Application.all
-  end
-
-  # GET /applications/1 or /applications/1.json
-  def show
-  end
-
-  # GET /applications/new
   def new
-    @application = Application.new
+    # Check if the volunteer has already applied for the opportunity
+    existing_application = @opportunity.applications.find_by(user_id: current_user.id)
+    if existing_application
+      redirect_to @opportunity, alert: "You have already applied to this opportunity."
+    else
+      @application = @opportunity.applications.build
+    end
   end
 
-  # GET /applications/1/edit
-  def edit
-  end
-
-  # POST /applications or /applications.json
   def create
-    @application = Application.new(application_params)
-
-    respond_to do |format|
+    # Check if the volunteer has already applied for the opportunity
+    existing_application = @opportunity.applications.find_by(user_id: current_user.id)
+    
+    if existing_application
+      redirect_to @opportunity, alert: "You have already applied to this opportunity."
+    else
+      @application = @opportunity.applications.build(application_params)
+      @application.user_id = current_user.id  # Associate the current user (volunteer) with the application
+      @application.status = :applied   # Set the status to applied
+  
       if @application.save
-        format.html { redirect_to @application, notice: "Application was successfully created." }
-        format.json { render :show, status: :created, location: @application }
+        redirect_to @opportunity, notice: "Application submitted!"
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
     end
   end
+  
 
-  # PATCH/PUT /applications/1 or /applications/1.json
+  def edit
+    @application = @opportunity.applications.find(params[:id])
+    redirect_to root_path, alert: "You are not authorized to edit the application status." unless current_user.role == "organization"
+  end
+
   def update
-    respond_to do |format|
-      if @application.update(application_params)
-        format.html { redirect_to @application, notice: "Application was successfully updated." }
-        format.json { render :show, status: :ok, location: @application }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /applications/1 or /applications/1.json
-  def destroy
-    @application.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to applications_path, status: :see_other, notice: "Application was successfully destroyed." }
-      format.json { head :no_content }
+    @application = @opportunity.applications.find(params[:id])
+    if current_user.role == "organization" && @application.update(status: params[:application][:status])
+      redirect_to @opportunity, notice: "Application status updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_application
-      @application = Application.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def application_params
-      params.expect(application: [ :user_id, :status ])
-    end
+  def application_params
+    # Permit only the necessary fields
+    params.require(:application).permit(:opportunity_id)
+  end
+
+  def set_opportunity
+    @opportunity = Opportunity.find(params[:opportunity_id])
+  end
+
+  def require_volunteer_role
+    redirect_to root_path, alert: "Only volunteers can apply." unless current_user.role == "volunteer"
+  end
 end

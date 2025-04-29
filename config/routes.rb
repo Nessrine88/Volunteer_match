@@ -14,8 +14,16 @@ Rails.application.routes.draw do
 # root "posts#index"# config/routes.rb
 # config/routes.rb
 root "home#index"
+# config/routes.rb
 resources :opportunities
-resources :applications
+resources :opportunities do
+  member do
+    get :applications  # This handles /opportunities/:id/applications (custom list view)
+  end
+
+  resources :applications, only: [:new, :create]  # Nested for applying to an opportunity
+end
+
 get 'search', to: 'opportunities#search', as: 'search'
 
  authenticated :user do
