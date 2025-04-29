@@ -78,6 +78,14 @@ class OpportunitiesController < ApplicationController
     @opportunity = current_user.opportunities.find(params[:id])
     @applications = @opportunity.applications.includes(:user)
   end
+  def my_applications
+    @user = current_user
+    @opportunities = Opportunity
+      .joins(:applications)
+      .where(applications: { user_id: @user.id })
+      .distinct
+  end
+  
   private
   def set_opportunity
     @opportunity = Opportunity.find(params[:id])

@@ -20,6 +20,10 @@
             <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
               FIND OPPORTUNITY
             <% end %>
+             <%= link_to my_applications_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+                My applications
+              <% end %>
+
           <% end %>
         <%# only show to signed-in organizations %>
           <% if user_signed_in? && current_user.role === "organization" %>

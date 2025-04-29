@@ -1,0 +1,11 @@
+<% @opportunities.each do |opportunity| %>
+  <li class="p-4 border rounded shadow-sm bg-white">
+    <p class="text-gray-800 font-semibold"><%= opportunity.title %></p>
+    <% application = opportunity.applications.find_by(user_id: current_user.id) %>
+    <% if application %>
+      <p class="text-gray-800 font-semibold">Status: <%= application.status %></p>
+    <% else %>
+      <p class="text-gray-500 italic">No status found.</p>
+    <% end %>
+  </li>
+<% end %>
