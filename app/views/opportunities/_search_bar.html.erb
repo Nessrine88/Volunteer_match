@@ -1,19 +1,27 @@
-<%= form_with url: search_path, method: :get, local: true, class: "w-full max-w-3xl mx-auto px-4", html: { id: "search-form" } do %>
-  <div class="flex flex-col sm:flex-row items-stretch gap-3">
-    <input
-      type="text"
-      name="query"
-      placeholder="Search opportunities..."
-      value="<%= params[:query] %>"
-      class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      oninput="document.getElementById('search-form').submit();"
-    />
-    <!-- Optional: keep the button for fallback -->
-    <button
-      type="submit"
-      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-    >
-      Search
-    </button>
-  </div>
-<% end %>
+<div class="bg-white py-10 px-4 sm:px-6 lg:px-8 shadow rounded-lg mb-8">
+  <h1 class="text-3xl font-bold text-gray-800 text-center mb-4">
+    Discover Volunteering Opportunities
+  </h1>
+  <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">
+    View and search available opportunities by <strong> location, or skills</strong>.
+  </p>
+
+  <%= form_with url: search_path, method: :get, local: true, class: "w-full max-w-3xl mx-auto", html: { id: "search-form" } do %>
+    <div class="flex flex-col sm:flex-row items-stretch gap-3">
+      <input
+        type="text"
+        name="query"
+        placeholder="Search opportunities..."
+        value="<%= params[:query] %>"
+        class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        oninput="document.getElementById('search-form').submit();"
+      />
+      <button
+        type="submit"
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+      >
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>

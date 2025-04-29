@@ -5,8 +5,8 @@
       <!-- Left: Logo -->
       <div class="flex items-center space-x-2">
         <%= link_to root_path, class: "flex items-center space-x-2 group" do %>
-          <div class="w-12 h-12 rounded-full border-2 border-black  overflow-hidden group-hover:border-blue-500 transition-colors">
-            <img src="<%= image_path('logo.jpeg') %>" alt="Logo" class=" w-full h-full object-cover" />
+          <div class="w-12 h-12 rounded-full border-2 border-black overflow-hidden group-hover:border-blue-500 transition-colors">
+            <img src="<%= image_path('logo.jpeg') %>" alt="Logo" class="w-full h-full object-cover" />
           </div>
           <span class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
             Volunteer Match
@@ -16,7 +16,7 @@
 
       <!-- Center: Nav Links (desktop only) -->
       <div class="hidden md:flex items-center px-4 py-2 rounded-full border border-black space-x-6">
-        <% if user_signed_in? && current_user.role === "volunteer" %>
+        <% if user_signed_in? && current_user.role == "volunteer" %>
           <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
             FIND OPPORTUNITY
           <% end %>
@@ -25,22 +25,27 @@
           <% end %>
         <% end %>
 
-        <% if user_signed_in? && current_user.role === "organization" %>
+        <% if user_signed_in? && current_user.role == "organization" %>
           <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
             ADD OPPORTUNITY
           <% end %>
           <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
             My Opportunities
           <% end %>
+  
+          <% if defined?(@opportunity) && @opportunity.present? %>
+            <%= link_to applicants_opportunity_path(@opportunity), class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+              Applicants
+            <% end %>
+          <% end %>
         <% end %>
-
         <span class="text-xl">🌞</span>
       </div>
 
       <!-- Right: Auth links -->
       <div class="hidden md:flex items-center space-x-4">
         <% if user_signed_in? %>
-          <span class="text-sm text-gray-600  ">Welcome, <%= current_user.email %>!</span>
+          <span class="text-sm text-gray-600">Welcome, <%= current_user.email %>!</span>
           <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
         <% else %>
           <%= link_to new_user_session_path, class: "text-sm text-gray-600 hover:text-gray-900" do %>Sign In<% end %>
@@ -50,7 +55,7 @@
 
       <!-- Mobile Hamburger Menu Button -->
       <div class="md:hidden">
-        <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+        <button id="mobile-menu-button" class="text-gray-800 focus:outline-none" aria-expanded="false" aria-controls="mobile-menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -59,8 +64,8 @@
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div id="mobile-menu" class="md:hidden hidden flex flex-col space-y-2 mt-4 px-4 py-2 border rounded-md bg-white shadow">
-      <% if user_signed_in? && current_user.role === "volunteer" %>
+    <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4 px-4 py-2 border rounded-md bg-white shadow">
+      <% if user_signed_in? && current_user.role == "volunteer" %>
         <%= link_to opportunities_path, class: "text-sm font-medium hover:text-blue-600" do %>
           FIND OPPORTUNITY
         <% end %>
@@ -69,36 +74,45 @@
         <% end %>
       <% end %>
 
-      <% if user_signed_in? && current_user.role === "organization" %>
+      <% if user_signed_in? && current_user.role == "organization" %>
         <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
           ADD OPPORTUNITY
         <% end %>
         <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
           My Opportunities
         <% end %>
+
+        <% if defined?(@opportunity) && @opportunity.present? %>
+          <%= link_to applicants_opportunity_path(@opportunity), class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+            Applicants
+          <% end %>
+        <% end %>
       <% end %>
 
-
-      <% if user_signed_in? %>
-        <span class="text-sm text-gray-600 md:block hidden">Welcome, <%= current_user.email %>!</span>
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
-      <% else %>
-        <%= link_to new_user_session_path, class: "text-sm text-gray-600 hover:text-gray-900" do %>Sign In<% end %>
-        <%= link_to new_user_registration_path, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition" do %>Register<% end %>
-      <% end %>
+      <div class="pt-2 border-t">
+        <% if user_signed_in? %>
+          <div class="text-sm text-gray-600 py-2">Welcome, <%= current_user.email %>!</div>
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "w-full text-left px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
+        <% else %>
+          <%= link_to new_user_session_path, class: "block text-sm text-gray-600 hover:text-gray-900 py-2" do %>Sign In<% end %>
+          <%= link_to new_user_registration_path, class: "block px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition" do %>Register<% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-
 </nav>
 
-<!-- Toggle Script -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('turbolinks:load', () => {
     const menuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
 
-    menuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', () => {
+        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenu.classList.toggle('hidden');
+        menuButton.setAttribute('aria-expanded', !isExpanded);
+      });
+    }
   });
 </script>

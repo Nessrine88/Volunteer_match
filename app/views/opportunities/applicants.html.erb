@@ -1,19 +1,34 @@
-<% if @applications.any? %>
-  <% @applications.each do |application| %>
-    <li class="p-4 border rounded shadow-sm bg-white">
-      <p class="text-gray-800 font-semibold"><%= application.user.email %></p>
-
-      <%= form_with model: [@opportunity, application], local: true do |f| %>
-        <div class="flex items-center space-x-2 mt-2">
-          <%= f.label :status, class: "text-sm font-medium text-gray-700" %>
-          <%= f.select :status, options_for_select(["applied", "accepted", "rejected"], application.status), {}, class: "rounded border-gray-300" %>
-          <%= f.submit "Update", class: "px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" %>
+<ul class="space-y-4 md:m-10 h-[75dvh] ">
+  <% if @applications.any? %>
+    <% @applications.each do |application| %>
+      <li class="p-6 border border-gray-200 rounded-lg shadow-sm bg-white">
+        <div class="mb-3">
+          <p class="text-base font-semibold text-gray-900">
+            <%= application.user.email %>
+          </p>
         </div>
-      <% end %>
+
+        <%= form_with model: [@opportunity, application], local: true do |f| %>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div>
+              <%= f.label :status, class: "text-sm text-gray-700 font-medium" %>
+              <%= f.select :status,
+                    options_for_select(["applied", "accepted", "rejected"], application.status),
+                    {},
+                    class: "mt-1 block w-full sm:w-auto border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" %>
+            </div>
+
+            <div class="mt-1 sm:mt-5">
+              <%= f.submit "Update",
+                    class: "inline-flex justify-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none transition" %>
+            </div>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  <% else %>
+    <li class="p-6 border border-gray-200 rounded-lg shadow-sm bg-white text-gray-500 italic text-center">
+      No applicants for this opportunity yet.
     </li>
   <% end %>
-<% else %>
-  <li class="p-4 border rounded shadow-sm bg-white text-gray-500 italic">
-    No applicants for this opportunity yet.
-  </li>
-<% end %>
+</ul>

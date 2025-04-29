@@ -1,14 +1,17 @@
 <% content_for :title, "Showing opportunity" %>
 
-<div class="w-full">
+<div class="w-full ">
 
   <!-- Back Button -->
-  <%= link_to opportunities_path, class: " mx-5 mt-10 w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-flex items-center justify_center font-medium" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+  <div class="mt-10 text-center">
+    <%= link_to organization_opportunities_path, class: " text-center mx-5 mt-10 w-full sm:w-auto text-center sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-flex items-center justify_center font-medium" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class=" h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M12.707 15.707a1 1 0 01-1.414 0L6.586 11l4.707-4.707a1 1 0 111.414 1.414L9.414 11l3.293 3.293a1 1 0 010 1.414z" clip-rule="evenodd" />
     </svg>
     Back to opportunities
   <% end %>
+  </div>
+
 
   <!-- Render the opportunity partial -->
   <%= render @opportunity %>
