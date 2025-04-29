@@ -34,7 +34,6 @@
           <% end %>
         <% end %>
 
-        <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT <% end %>
         <span class="text-xl">🌞</span>
       </div>
 
@@ -79,7 +78,6 @@
         <% end %>
       <% end %>
 
-      <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT <% end %>
 
       <% if user_signed_in? %>
         <span class="text-sm text-gray-600 md:block hidden">Welcome, <%= current_user.email %>!</span>
@@ -90,6 +88,7 @@
       <% end %>
     </div>
   </div>
+
 </nav>
 
 <!-- Toggle Script -->

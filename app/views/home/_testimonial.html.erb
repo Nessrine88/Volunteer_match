@@ -1,7 +1,7 @@
 <% alignment_class = position == 'right' ? 'items-end text-right' : 'items-start text-left' %>
 
 <div class="bg-white p-6 rounded-lg shadow-md flex flex-col mx-10 <%= alignment_class %>">
-  <%= image_tag image_path, alt: name, class: "w-16 h-16 rounded-full mb-4 object-cover" %>
+  <%= image_tag image_path, alt: name, class: "w-28 h-28 rounded-full mb-4 object-cover" %>
   <p class="text-gray-700 italic mb-4 max-w-prose">“<%= quote %>”</p>
   <div class="text-sm text-gray-900 font-semibold"><%= name %></div>
   <div class="text-xs text-gray-500"><%= role %></div>
