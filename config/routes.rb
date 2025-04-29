@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       get 'applicants', to: 'opportunities#applicants'  # Applicants for an opportunity
     end
 
-    resources :applications, only: [:new, :create]  # Nested for applying
+    resources :applications, only: [:new, :create, :edit, :update, :index]
   end
 
   # Display opportunities a user has applied to

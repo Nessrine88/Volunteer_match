@@ -1,14 +1,13 @@
-<h2 class="text-xl font-bold mb-4">Applicants for "<%= @opportunity.title %>"</h2>
-
-<% if @applications.present? && @applications.any? %>
-  <ul class="space-y-4">
-    <% @applications.each do |application| %>
-      <li class="p-4 border rounded shadow-sm bg-white">
-        <p class="text-gray-800 font-semibold"><%= application.user.email %> (<%= application.user.email %>)</p>
-        <p class="text-sm text-gray-600 mt-1">Status: <%= application.status.capitalize %></p>
-      </li>
+<% @applications.each do |application| %>
+  <li class="p-4 border rounded shadow-sm bg-white">
+    <p class="text-gray-800 font-semibold"><%= application.user.email %></p>
+    
+    <%= form_with model: [@opportunity, application], local: true do |f| %>
+      <div class="flex items-center space-x-2 mt-2">
+        <%= f.label :status, class: "text-sm font-medium text-gray-700" %>
+        <%= f.select :status, options_for_select(["applied", "accepted", "rejected"], application.status), {}, class: "rounded border-gray-300" %>
+        <%= f.submit "Update", class: "px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" %>
+      </div>
     <% end %>
-  </ul>
-<% else %>
-  <p class="text-gray-500">No applicants yet.</p>
+  </li>
 <% end %>
