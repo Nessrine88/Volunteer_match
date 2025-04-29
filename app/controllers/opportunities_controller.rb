@@ -1,10 +1,18 @@
 class OpportunitiesController < ApplicationController
   before_action :set_opportunity, only: %i[ show edit update destroy ]
-  # GET /opportunities or /opportunities.json
+  before_action :authenticate_user! 
+
   def index
     @opportunities = Opportunity.all
   end
-
+  def index_for_organization
+    if current_user
+      @opportunities = current_user.opportunities.order(created_at: :desc)
+      logger.debug "Opportunities: #{@opportunities.inspect}"
+    else
+      redirect_to root_path, alert: "You are not authorized to view this page."
+    end
+  end
   # GET /opportunities/1 or /opportunities/1.json
   def show
     @applied_users = @opportunity.applications.includes(:user).map(&:user)
@@ -27,10 +35,10 @@ class OpportunitiesController < ApplicationController
   # POST /opportunities or /opportunities.json
   def create
     @opportunity = Opportunity.new(opportunity_params)
-
+    @opportunity.user_id = current_user.id
     respond_to do |format|
       if @opportunity.save
-        format.html { redirect_to @opportunity, notice: "Opportunity was successfully created." }
+        format.html { redirect_to @opportunity}
         format.json { render :show, status: :created, location: @opportunity }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -69,10 +77,10 @@ class OpportunitiesController < ApplicationController
 
     def applications
       @opportunity = Opportunity.find(params[:id])
-      @applications = @opportunity.applications.includes(:volunteer)
+      @applications = @opportunity.applications.includes(:user)
     end
     
     def opportunity_params
-      params.expect(opportunity: [ :title, :description, :skills_required, :location, :start_date, :end_date, :user_id ])
+      params.expect(opportunity: [ :title, :description, :skills_required, :location, :start_date, :end_date ])
     end
 end

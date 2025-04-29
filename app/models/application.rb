@@ -1,6 +1,6 @@
 # app/models/application.rb
 class Application < ApplicationRecord
-  belongs_to :volunteer, class_name: 'User'
+  belongs_to :user
   belongs_to :opportunity
 
   VALID_STATUSES = ["applied", "accepted", "rejected"]

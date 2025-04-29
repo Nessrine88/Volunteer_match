@@ -29,8 +29,8 @@
           <% end %>
 
           <% if user_signed_in? && current_user.role === "organization" %>
-            <%= link_to new_opportunity_path, class: "text-sm font-medium hover:text-blue-600" do %>
-              LIST OF VOLUINTEER
+            <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
+              My Opportunities
             <% end %>
           <% end %>
         <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT<% end %>

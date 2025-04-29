@@ -1,53 +1,63 @@
-<%= form_with(model: [@opportunity], class: "contents") do |form| %>
+<div class="max-w-2xl mx-auto p-6 bg-red-500 rounded-lg shadow-md  boder-black border-2">
+  <%= form_with(model: [@opportunity], class: "space-y-6 bg-white p-5 rounded-md") do |form| %>
+    <% if opportunity.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+        <h2 class="text-lg font-medium text-red-700">
+          <%= pluralize(opportunity.errors.count, "error") %> prohibited this opportunity from being saved:
+        </h2>
+        <ul class="mt-2 list-disc pl-5 space-y-1 text-red-600">
+          <% opportunity.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <% if opportunity.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(opportunity.errors.count, "error") %> prohibited this opportunity from being saved:</h2>
+    <div class="space-y-6">
+      <div>
+        <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :title, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm #{'border-red-500' if opportunity.errors[:title].any?}", placeholder: "Software Developer Position" %>
+      </div>
 
-      <ul class="list-disc ml-6">
-        <% opportunity.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <div>
+        <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_area :description, rows: 4, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm #{'border-red-500' if opportunity.errors[:description].any?}", placeholder: "Detailed description of the opportunity..." %>
+      </div>
+
+      <div>
+        <%= form.label :skills_required, "Required Skills (comma separated)", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_area :skills_required, rows: 2, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm #{'border-red-500' if opportunity.errors[:skills_required].any?}", placeholder: "Ruby, Rails, JavaScript, Teamwork" %>
+        <p class="mt-1 text-xs text-gray-500">Separate multiple skills with commas</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <%= form.label :location, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_field :location, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm #{'border-red-500' if opportunity.errors[:location].any?}", placeholder: "Remote or City, Country" %>
+        </div>
+
+        <div>
+          <%= form.label :user_id, "Posted By", class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_field :user_id, value: current_user.email, disabled: true, class: "mt-1 block w-full rounded-md border border-gray-300 bg-gray-100 py-2 px-3 shadow-sm sm:text-sm cursor-not-allowed" %>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <%= form.label :start_date, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.datetime_field :start_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm #{'border-red-500' if opportunity.errors[:start_date].any?}" %>
+        </div>
+
+        <div>
+          <%= form.label :end_date, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.datetime_field :end_date, class: "mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm #{'border-red-500' if opportunity.errors[:end_date].any?}" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end pt-4 border-t border-gray-200">
+      <%= link_to "Cancel", opportunities_path, class: "mr-3 rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+      <%= form.submit class: "inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
     </div>
   <% end %>
-
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:title].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:title].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:description].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:description].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :skills_required %>
-    <%= form.textarea :skills_required, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:skills_required].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:skills_required].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:location].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:location].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :start_date %>
-    <%= form.datetime_field :start_date, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:start_date].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:start_date].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :end_date %>
-    <%= form.datetime_field :end_date, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:end_date].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:end_date].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": opportunity.errors[:user_id].none?, "border-red-400 focus:outline-red-600": opportunity.errors[:user_id].any?}] %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-<% end %>
+</div>

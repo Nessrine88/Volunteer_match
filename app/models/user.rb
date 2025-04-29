@@ -8,6 +8,6 @@ class User < ApplicationRecord
 
          validates :role, inclusion: { in: [ "volunteer", "organization" ], message: "%{value} is not a valid role" }
 
-         has_many :applications, foreign_key: :volunteer_id
+         has_many :applications, foreign_key: :user_id
         has_many :opportunities, through: :applications
 end
