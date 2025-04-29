@@ -1,4 +1,7 @@
 class OpportunitiesController < ApplicationController
+
+  before_action :authenticate_user! 
+
   before_action :set_opportunity, only: %i[ show edit update destroy ]
   before_action :require_volunteer, only: [:applicants]
 
