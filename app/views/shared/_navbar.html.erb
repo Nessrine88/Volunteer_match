@@ -5,8 +5,8 @@
       <!-- Left: Logo -->
       <div class="flex items-center space-x-2">
         <%= link_to root_path, class: "flex items-center space-x-2 group" do %>
-          <div class="w-12 h-12 rounded-full border-2 border-black overflow-hidden group-hover:border-blue-500 transition-colors">
-            <img src="<%= image_path('logo.jpeg') %>" alt="Logo" class="w-full h-full object-cover" />
+          <div class="w-12 h-12 rounded-full border-2 border-black  overflow-hidden group-hover:border-blue-500 transition-colors">
+            <img src="<%= image_path('logo.jpeg') %>" alt="Logo" class=" w-full h-full object-cover" />
           </div>
           <span class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
             Volunteer Match
@@ -41,7 +41,7 @@
       <!-- Right: Auth links -->
       <div class="hidden md:flex items-center space-x-4">
         <% if user_signed_in? %>
-          <span class="text-sm text-gray-600">Welcome, <%= current_user.email %>!</span>
+          <span class="text-sm text-gray-600  ">Welcome, <%= current_user.email %>!</span>
           <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
         <% else %>
           <%= link_to new_user_session_path, class: "text-sm text-gray-600 hover:text-gray-900" do %>Sign In<% end %>
@@ -82,7 +82,7 @@
       <%= link_to '#', class: "text-sm font-medium hover:text-blue-600" do %> MY ACCOUNT <% end %>
 
       <% if user_signed_in? %>
-        <span class="text-sm text-gray-600">Welcome, <%= current_user.email %>!</span>
+        <span class="text-sm text-gray-600 md:block hidden">Welcome, <%= current_user.email %>!</span>
         <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition" %>
       <% else %>
         <%= link_to new_user_session_path, class: "text-sm text-gray-600 hover:text-gray-900" do %>Sign In<% end %>

@@ -1,5 +1,5 @@
 <div class="flex justify-center items-center  bg-white">
-  <div class="bg-white rounded-3xl shadow-lg flex overflow-hidden w-full px-4 mx-10  border-2 border-black my-10 h-[80dvh]">
+  <div class="bg-white rounded-3xl shadow-lg flex overflow-hidden w-full px-4 mx-10  border-2 border-black my-10 h-[90dvh]">
     <!-- Registration Form Section -->
     <div class="w-full md:w-1/2 p-10">
       <h2 class="text-2xl font-semibold text-center mb-8">SIGN UP</h2>
@@ -33,9 +33,21 @@
 <div class="flex justify-center space-x-4">
   <% User::ROLES.each do |role| %>
     <%= f.radio_button :role, role, id: "role_#{role}", class: "hidden peer" %>
-    <%= label_tag "role_#{role}", role.humanize, class: "flex items-center bg-blue-600 p-5 justify-center min-w-md  rounded-full border border-gray-300 cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white transition" %>
+
+    <%= label_tag "role_#{role}", role.humanize, class: "
+      flex items-center justify-center
+      w-[25dvw] md:w-[10dvw] min-w-md p-5
+      rounded-full border border-gray-300
+      bg-white text-blue-600 font-semibold
+      cursor-pointer transition-all duration-200 ease-in-out
+      peer-checked:bg-blue-600 peer-checked:text-white
+      peer-checked:shadow-lg peer-checked:ring-2 peer-checked:ring-blue-300
+      hover:bg-blue-50
+    " %>
   <% end %>
 </div>
+
+
 
 </div>
 

@@ -1,0 +1,9 @@
+<div class="mt-12 flex flex-col gap-8">
+  <% [
+    { name: "Alice Johnson", role: "Nonprofit Director", quote: "MyApp helped us find committed volunteers in days!", image_path: "alice.jpg" },
+    { name: "Michael Smith", role: "Community Organizer", quote: "An intuitive and professional platform that works.", image_path: "michael.jpeg" },
+    { name: "Sara Lee", role: "Volunteer", quote: "I found the perfect opportunity and made a difference.", image_path: "sara.jpg" }
+  ].each_with_index do |testimonial, index| %>
+    <%= render partial: 'home/testimonial', locals: testimonial.merge(position: index.odd? ? 'right' : 'left') %>
+  <% end %>
+</div>
