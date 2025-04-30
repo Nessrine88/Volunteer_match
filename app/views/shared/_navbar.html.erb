@@ -32,12 +32,6 @@
           <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
             My Opportunities
           <% end %>
-  
-          <% if defined?(@opportunity) && @opportunity.present? %>
-            <%= link_to applicants_opportunity_path(@opportunity), class: "uppercase text-sm font-medium hover:text-blue-600" do %>
-              Applicants
-            <% end %>
-          <% end %>
         <% end %>
         <span class="text-xl">🌞</span>
       </div>
@@ -80,12 +74,6 @@
         <% end %>
         <%= link_to organization_opportunities_path, class: "uppercase text-sm font-medium hover:text-blue-600" do %>
           My Opportunities
-        <% end %>
-
-        <% if defined?(@opportunity) && @opportunity.present? %>
-          <%= link_to applicants_opportunity_path(@opportunity), class: "uppercase text-sm font-medium hover:text-blue-600" do %>
-            Applicants
-          <% end %>
         <% end %>
       <% end %>
 
