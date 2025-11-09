@@ -33,7 +33,14 @@
             My Opportunities
           <% end %>
         <% end %>
-        <span class="text-xl">🌞</span>
+        <% if current_user.present? %>
+  <div class="nav-item">
+    <%= link_to notifications_path do %>
+      Notifications (<%= current_user.notifications.unread.count %>)
+    <% end %>
+  </div>
+<% end %>
+
       </div>
 
       <!-- Right: Auth links -->

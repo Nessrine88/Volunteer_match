@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "notifications/index"
+  get "notifications/mark_as_read"
   # Home route
   root "home#index"
 
@@ -32,4 +34,11 @@ Rails.application.routes.draw do
     get "organization/opportunities", to: "opportunities#index_for_organization", as: :organization_opportunities
     get "volunteer/opportunities", to: "opportunities#index_for_all", as: :volunteer_opportunities
   end
+
+  resources :notifications, only: [:index] do
+  member do
+    patch :mark_as_read
+  end
+end
+
 end

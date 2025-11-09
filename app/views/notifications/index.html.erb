@@ -1,0 +1,14 @@
+<h1>Your Notifications</h1>
+
+<% @notifications.each do |n| %>
+  <div style="padding: 10px; margin-bottom: 5px; background: <%= n.read ? '#f0f0f0' : '#dff0d8' %>">
+    <strong><%= n.title %></strong><br>
+    <%= n.body %><br>
+
+    <% unless n.read %>
+      <%= button_to "Mark as read",
+                    mark_as_read_notification_path(n),
+                    method: :patch %>
+    <% end %>
+  </div>
+<% end %>
