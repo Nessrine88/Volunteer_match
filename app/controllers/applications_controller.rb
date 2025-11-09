@@ -52,13 +52,20 @@ def update
   if current_user.role == "organization" && @application.update(status: params[:application][:status])
     
     # ✅ SEND NOTIFICATION TO VOLUNTEER WHEN ACCEPTED
-    if @application.status == "accepted"
-      Notification.create(
-        user: @application.user,
-        title: "Application Accepted",
-        body: "Good news! Your application for #{@opportunity.title} has been accepted."
-      )
-    end
+ if @application.status == "accepted"
+  Notification.create(
+    user: @application.user,
+    title: "Application Accepted",
+    body: "Good news! Your application for #{@opportunity.title} has been accepted."
+  )
+elsif @application.status == "rejected"
+  Notification.create(
+    user: @application.user,
+    title: "Application Rejected",
+    body: "Unfortunately! Your application for #{@opportunity.title} has been rejected."
+  )
+end
+
 
     redirect_to @opportunity, notice: "Application status updated."
   else
